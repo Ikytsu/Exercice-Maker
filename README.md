@@ -1,7 +1,7 @@
 ## Exercice-Maker
 The exercice maker saves everything you do, it's basically a old projet i have decided to finally publish (so normal if it's really a poor code, i am gonna to update this later). Running the file with python will create a .db to store data.
 
-### Edit Mod
+### Edit Mod:
 
 ## Multiple choice questionnaire:
 Select a exerice and:
