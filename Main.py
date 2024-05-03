@@ -105,10 +105,10 @@ def Edit_Clicked():
     global MaxID
     Edit_Button.destroy()
     Test_Button.destroy()
-    Add_exercice_Button = customtkinter.CTkButton(app, text="Ajouter un exercice", command=Add_exercice)
+    Add_exercice_Button = customtkinter.CTkButton(app, text="Add exercice", command=Add_exercice)
     Add_exercice_Button.pack(padx=500,pady=0)
     Add_exercice_Button.place(x=0, y=20)
-    Remove_exercice_Button = customtkinter.CTkButton(app, text="Enlever un exercice",command=Remove_exercice)
+    Remove_exercice_Button = customtkinter.CTkButton(app, text="Remove exercice",command=Remove_exercice)
     Remove_exercice_Button.pack(padx=500,pady=0)
     Remove_exercice_Button.place(x=0, y=80)
     while Number_Of_Exercice < MaxID:
@@ -133,15 +133,15 @@ def Parameters_Exercice_pop():
     Question_Text_Box.pack(padx=50,pady=0)
     Question_Text_Box.place(x=400, y=20)
 
-    QCM_Button = customtkinter.CTkCheckBox(app, text="QCM", variable=Check_Var_Qcm, command=Qcm_Clicked)
+    QCM_Button = customtkinter.CTkCheckBox(app, text="Multiples choices questionnaire", variable=Check_Var_Qcm, command=Qcm_Clicked)
     QCM_Button.pack(padx=50,pady=0)
     QCM_Button.place(x=400, y=70)
 
-    Question_Exact_Button = customtkinter.CTkCheckBox(app, text="Réponse exacte", variable=Check_Var_Exact_question ,command=Question_Exact_Clicked)
+    Question_Exact_Button = customtkinter.CTkCheckBox(app, text="Exact question", variable=Check_Var_Exact_question ,command=Question_Exact_Clicked)
     Question_Exact_Button.pack(padx=50,pady=0)
     Question_Exact_Button.place(x=400, y=130)
 
-    Question_Multiple_Arguments_Button = customtkinter.CTkCheckBox(app, text="Réponse non exacte (ça veut dire que l'utilisateur peut formuler comme il veut la réponse)", variable=Check_Var_No_Exact_question, command=Non_Question_Exact_Clicked)
+    Question_Multiple_Arguments_Button = customtkinter.CTkCheckBox(app, text="Non exact question", variable=Check_Var_No_Exact_question, command=Non_Question_Exact_Clicked)
     Question_Multiple_Arguments_Button.pack(padx=50,pady=0)
     Question_Multiple_Arguments_Button.place(x=400, y=180)
 
@@ -157,7 +157,7 @@ def Parameters_Exercice_pop():
     Submit.pack(padx=500,pady=0)
     Submit.place(x=400, y=600)
 
-    Variable_Selected_Exercice_Text = tk.StringVar(value="Aucun exercice sélectionné")
+    Variable_Selected_Exercice_Text = tk.StringVar(value="No selected exercice")
     Selected_Exercice_Text_Indicator = customtkinter.CTkLabel(master=app, textvariable=Variable_Selected_Exercice_Text,font=("Courier", 30))
     Selected_Exercice_Text_Indicator.pack()
     Selected_Exercice_Text_Indicator.place(x=400, y=800)    
@@ -179,7 +179,7 @@ def Test_Clicked():
 
     Question_Type = cur.fetchone()
     Question_Type_String = Question_Type[0]
-    if Question_Type_String != "QCM":
+    if Question_Type_String != "Multiples choice questionnaire":
         Answer_Text_Box = customtkinter.CTkTextbox(app, height=2)
         Answer_Text_Box.pack()
         Answer_Text_Box.place(x=850, y=250)
@@ -212,7 +212,7 @@ def Test_Clicked():
             QCM_Table_Test_Selected_Only_For_NoMultiple.append(False)
 
 
-    Answer_Button = customtkinter.CTkButton(app, text="Répondre", command=Answer_Clicked)
+    Answer_Button = customtkinter.CTkButton(app, text="Answer", command=Answer_Clicked)
     Answer_Button.pack()
     Answer_Button.place(x=875, y=300)
     cur.close()
@@ -253,7 +253,7 @@ def Remove_exercice():
         cur.close()
         con.close()
     else:
-        print("Aucun exercice à delete")    
+        print("No exercice to delete")    
     print("a")
 
 def generate_callbackforexercice(btn):
@@ -265,14 +265,14 @@ def Exercice_Select_Function(Bouton):
     Selected_Exercice_Info["Selected Exercice"] = Bouton.cget('text')
     ID_Of_Exercice_Select_Save_Table = Selected_Exercice_Info["Selected Exercice"].split()
     ID_Of_Exercice_Select_Save = int(ID_Of_Exercice_Select_Save_Table[-1])
-    Variable_Selected_Exercice_Text.set("L'exercice séléctionné est l'exercice numéro " + ID_Of_Exercice_Select_Save_Table[-1])
+    Variable_Selected_Exercice_Text.set("The selectionned exercice is the number " + ID_Of_Exercice_Select_Save_Table[-1])
     cur.execute("SELECT * FROM Exercices WHERE id = ?", (ID_Of_Exercice_Select_Save,))
     ExerciceSaved = cur.fetchall()
     #Détecte si l'exercice est sauvegardé quelque part
     if ExerciceSaved:
         cur.execute("SELECT questiontype FROM Exercices WHERE id = ?", (ID_Of_Exercice_Select_Save,))
         QuestionTypeOfIt = cur.fetchone()
-        if QuestionTypeOfIt[0] == "QCM":
+        if QuestionTypeOfIt[0] == "Multiples choice questionnaire":
             #Type
             Check_Var_Qcm.set(1)
             Qcm_Clicked()
@@ -378,7 +378,7 @@ def Qcm_Clicked():
     global Add_Arguments_Button
     if bool(Selected_Exercice_Info) == True:
         if Check_Var_Qcm.get() == 1:
-            Selected_Exercice_Info["Question Type"] = "QCM"
+            Selected_Exercice_Info["Question Type"] = "Multiples choice questionnaire"
             try:
                 Question_Exact_Text_Box.destroy()
             except:
@@ -445,10 +445,10 @@ def Non_Question_Exact_Clicked():
             print("no")
         if Check_Var_Qcm.get() != 1:
             if Check_Var_No_Exact_question.get() == 1:
-                Add_Arguments_Button = customtkinter.CTkButton(app, text="Ajouter un argument", command=Add_Arguments_Clicked)
+                Add_Arguments_Button = customtkinter.CTkButton(app, text="Add an argument", command=Add_Arguments_Clicked)
                 Add_Arguments_Button.pack(padx=50,pady=0)
                 Add_Arguments_Button.place(x=400, y=320)
-                Withdraw_Arguments_Button = customtkinter.CTkButton(app, text="Retirer un argument", command=Withdraw_Arguments_Clicked)
+                Withdraw_Arguments_Button = customtkinter.CTkButton(app, text="Remove an argument", command=Withdraw_Arguments_Clicked)
                 Withdraw_Arguments_Button.pack(padx=500,pady=0)
                 Withdraw_Arguments_Button.place(x=620, y=320)
             else:
@@ -564,7 +564,7 @@ def Submit_Clicked():
             con.close()
         except:
             print("Bruh")
-        Warn = customtkinter.CTkLabel(app, text="Erreur, Merci de rentrer toutes les choses à rentrer ou éviter l'écriture pas supporté")
+        Warn = customtkinter.CTkLabel(app, text="Error, please complete everything and to add normal writing")
         Warn.pack(padx=500,pady=0)
         Warn.place(x=400, y=900) 
 
@@ -626,7 +626,7 @@ def Answer_Clicked():
         Question_Type = cur.fetchone()
         Question_Type_String = Question_Type[0]
 
-        if Question_Type_String == "QCM":
+        if Question_Type_String == "Multiples choice questionnaire":
             cur.execute("SELECT multiple FROM Exercices WHERE id = ?", (Current_Test_Exercice - 1,))
             Multiple = cur.fetchone()
             Multiple_String = Multiple[0]
@@ -658,7 +658,7 @@ def Answer_Clicked():
             cur.execute("SELECT questiontype FROM Exercices WHERE id = ?", (Current_Test_Exercice,))
             QuestionTypeLol = cur.fetchone()
             QuestionTypeLolString = QuestionTypeLol[0]
-            if QuestionTypeLolString != "QCM":
+            if QuestionTypeLolString != "Multiples choice questionnaire":
                 Answer_Text_Box = customtkinter.CTkTextbox(app, height=2)
                 Answer_Text_Box.pack()
                 Answer_Text_Box.place(x=850, y=250)
@@ -699,7 +699,7 @@ def Answer_Clicked():
             cur.execute("SELECT questiontype FROM Exercices WHERE id = ?", (Current_Test_Exercice,))
             QuestionTypeLol = cur.fetchone()
             QuestionTypeLolString = QuestionTypeLol[0]
-            if QuestionTypeLolString == "QCM":
+            if QuestionTypeLolString == "Multiples choice questionnaire":
                 print("o")
                 Answer_Text_Box.destroy()
                 cur.execute("SELECT titleofquestion FROM Exercices WHERE id = ?", (Current_Test_Exercice,))
@@ -758,7 +758,7 @@ def Answer_Clicked():
             cur.execute("SELECT questiontype FROM Exercices WHERE id = ?", (Current_Test_Exercice,))
             QuestionTypeLol = cur.fetchone()
             QuestionTypeLolString = QuestionTypeLol[0]
-            if QuestionTypeLolString == "QCM":
+            if QuestionTypeLolString == "Multiples choice questionnaire":
                 print("o")
                 Answer_Text_Box.destroy()
                 cur.execute("SELECT titleofquestion FROM Exercices WHERE id = ?", (Current_Test_Exercice,))
@@ -799,7 +799,7 @@ def Answer_Clicked():
         Question_Type = cur.fetchone()
         Question_Type_String = Question_Type[0]
 
-        if Question_Type_String == "QCM":
+        if Question_Type_String == "Multiples choice questionnaire":
             cur.execute("SELECT multiple FROM Exercices WHERE id = ?", (Current_Test_Exercice - 1,))
             Multiple = cur.fetchone()
             Multiple_String = Multiple[0]
@@ -882,7 +882,7 @@ def Answer_Clicked():
         if len(WrongList) == 0:
             Variable_Text.set(str(Grade_Test) + "/" + str(MaxID))
         else:
-            StrListOfWrong = str(Grade_Test) + "/" + str(MaxID) + " T'avais faux dans la "
+            StrListOfWrong = str(Grade_Test) + "/" + str(MaxID) + " You were wrong in "
             Number_Of_Loop = 0
             print(WrongList)
             while Number_Of_Loop < len(WrongList):
