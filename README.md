@@ -17,7 +17,7 @@ Pretty much the same thing but for keywords you want in the answer.
 ## Exact question:
 Set to false multiple answer or not is a must but it would change nothing.
 
-### Test Mod
+### Test Mod:
 Once you finished to create your beautiful exercice you can test your skills by closing and launching again the app and clicking on test.
 
 ### Libs
